@@ -17,7 +17,6 @@ class App extends Component {
           dispatch={dispatch}
         />
         <div className='container'>
-          <p> Hot reload??? Please??? For the love of god. Is it doing it??!!!</p>
           <Quotes
             onQuoteClick={() => dispatch(fetchQuote())}
             onSecretQuoteClick={() => dispatch(fetchSecretQuote())}

@@ -73,10 +73,11 @@ export function loginUserFirebase(ref, creds){
     }, (error, authData) => {
       if (error) {
         alert("Login Failed! Either the username or password is incorrect", error);
-        dispatch(loginError("BAD!!!"));
+        dispatch(loginError("Username or password are incorrect"));
       } else {
         console.log("Authenticated successfully with payload:", authData);
-        let user = {id_token : authData.uid};
+        let user = {id_token : authData.token};
+        localStorage.setItem('id_token', user.id_token)
         dispatch(receiveLogin(user));
       }
     });
