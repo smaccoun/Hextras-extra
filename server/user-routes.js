@@ -17,7 +17,7 @@ function createToken(user) {
 }
 
 function getUserScheme(req) {
-  
+
   var username;
   var type;
   var userSearch = {};
@@ -43,15 +43,15 @@ function getUserScheme(req) {
 }
 
 app.post('/users', function(req, res) {
-  
-  var userScheme = getUserScheme(req);  
+
+  var userScheme = getUserScheme(req);
 
   if (!userScheme.username || !req.body.password) {
     return res.status(400).send("You must send the username and the password");
   }
 
   if (_.find(users, userScheme.userSearch)) {
-   return res.status(400).send("A user with that username already exists");
+   return res.status(400).send({message: "A user with that username already exists"});
   }
 
   var profile = _.pick(req.body, userScheme.type, 'password', 'extra');
@@ -60,7 +60,8 @@ app.post('/users', function(req, res) {
   users.push(profile);
 
   res.status(201).send({
-    id_token: createToken(profile)
+    id_token: createToken(profile),
+    message : "Successfully created new user " + userScheme.username
   });
 });
 
@@ -73,7 +74,7 @@ app.post('/sessions/create', function(req, res) {
   }
 
   var user = _.find(users, userScheme.userSearch);
-  
+
   if (!user) {
     return res.status(401).send({message:"The username or password don't match", user: user});
   }

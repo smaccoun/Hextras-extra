@@ -2,7 +2,8 @@ import React, { Component, PropTypes } from 'react'
 import LoginFirebase from './LoginFirebase'
 import Login from './Login'
 import Logout from './Logout'
-import { loginUserFirebase, loginUser, logoutUser } from '../actions'
+import Register from './Register'
+import { loginUserFirebase, loginUser, logoutUser, registerUser } from '../actions'
 
 export default class Navbar extends Component {
 
@@ -32,6 +33,17 @@ export default class Navbar extends Component {
            {isAuthenticated &&
              <Logout onLogoutClick={() => dispatch(logoutUser())} />
            }
+
+           {isAuthenticated &&
+             <p> Welcome! </p>
+           }
+
+           {!isAuthenticated &&
+           <Register
+              onRegisterClick={(creds) => dispatch(registerUser(creds))}
+              errorMessage={errorMessage}
+              />
+            }
 
          </div>
        </div>
